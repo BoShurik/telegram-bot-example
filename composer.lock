@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "boshurik/telegram-bot-bundle",
-            "version": "2.0.1",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BoShurik/TelegramBotBundle.git",
-                "reference": "ecc6d3be057869fd5655d0f00cf5e7b0b8647f7b"
+                "reference": "e6863dbc1be0ea6fa2abd40d2595f1a4d0287673"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BoShurik/TelegramBotBundle/zipball/ecc6d3be057869fd5655d0f00cf5e7b0b8647f7b",
-                "reference": "ecc6d3be057869fd5655d0f00cf5e7b0b8647f7b",
+                "url": "https://api.github.com/repos/BoShurik/TelegramBotBundle/zipball/e6863dbc1be0ea6fa2abd40d2595f1a4d0287673",
+                "reference": "e6863dbc1be0ea6fa2abd40d2595f1a4d0287673",
                 "shasum": ""
             },
             "require": {
@@ -41,7 +41,7 @@
                 "MIT"
             ],
             "description": "Telegram bot bundle",
-            "time": "2016-12-15T16:24:40+00:00"
+            "time": "2017-03-18T18:01:48+00:00"
         },
         {
             "name": "doctrine/annotations",

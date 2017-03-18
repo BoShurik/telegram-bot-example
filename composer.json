@@ -23,7 +23,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "twig/twig": "^1.0||^2.0",
 
-        "boshurik/telegram-bot-bundle": "~2.0"
+        "boshurik/telegram-bot-bundle": "~2.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

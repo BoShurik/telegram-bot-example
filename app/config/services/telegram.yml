@@ -1,10 +1,10 @@
 services:
     app.telegram.command.help:
-        class: BoShurik\TelegramBotBundle\Telegram\Command\HelpCommand
+        class: AppBundle\Telegram\HelpCommand
         arguments:
             - "@bo_shurik_telegram_bot.command_pool"
         tags:
-            - { name: bo_shurik_telegram_bot.command }
+            - { name: bo_shurik_telegram_bot.command, priority: -512 }
 
     app.telegram.command.hello:
         class: AppBundle\Telegram\HelloCommand
