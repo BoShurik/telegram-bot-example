@@ -4,8 +4,45 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2cbcce5f50425553657fa895af56800",
+    "content-hash": "1d9fbdd5cb8a92db939b8ae61ede8f87",
     "packages": [
+        {
+            "name": "boshurik/telegram-bot-bundle",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BoShurik/TelegramBotBundle.git",
+                "reference": "ecc6d3be057869fd5655d0f00cf5e7b0b8647f7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BoShurik/TelegramBotBundle/zipball/ecc6d3be057869fd5655d0f00cf5e7b0b8647f7b",
+                "reference": "ecc6d3be057869fd5655d0f00cf5e7b0b8647f7b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/framework-bundle": ">=2.7",
+                "telegram-bot/api": "^2.2.6"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BoShurik\\TelegramBotBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Telegram bot bundle",
+            "time": "2016-12-15T16:24:40+00:00"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.4.0",
@@ -1582,6 +1619,61 @@
                 "framework"
             ],
             "time": "2017-03-10T18:35:48+00:00"
+        },
+        {
+            "name": "telegram-bot/api",
+            "version": "2.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TelegramBot/Api.git",
+                "reference": "230b3be5d741c89cf79c625d5b2c6cf4ffc3c9c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TelegramBot/Api/zipball/230b3be5d741c89cf79c625d5b2c6cf4ffc3c9c1",
+                "reference": "230b3be5d741c89cf79c625d5b2c6cf4ffc3c9c1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "*",
+                "phpunit/phpunit": "4.*",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TelegramBot\\Api\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ilya Gusev",
+                    "email": "mail@igusev.ru",
+                    "homepage": "https://php-cat.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Wrapper for Telegram Bot API",
+            "homepage": "https://github.com/TelegramBot/Api",
+            "keywords": [
+                "bot",
+                "bot api",
+                "php",
+                "telegram"
+            ],
+            "time": "2017-03-17T08:24:34+00:00"
         },
         {
             "name": "twig/twig",

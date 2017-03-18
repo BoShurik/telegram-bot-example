@@ -45,3 +45,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+bo_shurik_telegram_bot:
+    api:
+        token: "%telegram_bot_api_token%"
+    name: "%telegram_bot_name%"

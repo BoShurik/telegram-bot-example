@@ -9,3 +9,6 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    telegram_bot_api_token: ~
+    telegram_bot_name: ~
