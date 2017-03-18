@@ -1,0 +1,7 @@
+services:
+    app.telegram.command.help:
+        class: BoShurik\TelegramBotBundle\Telegram\Command\HelpCommand
+        arguments:
+            - "@bo_shurik_telegram_bot.command_pool"
+        tags:
+            - { name: bo_shurik_telegram_bot.command }
