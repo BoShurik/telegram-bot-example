@@ -5,3 +5,8 @@ services:
             - "@bo_shurik_telegram_bot.command_pool"
         tags:
             - { name: bo_shurik_telegram_bot.command }
+
+    app.telegram.command.hello:
+        class: AppBundle\Telegram\HelloCommand
+        tags:
+            - { name: bo_shurik_telegram_bot.command }
