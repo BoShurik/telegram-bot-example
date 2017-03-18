@@ -5,7 +5,7 @@
  * Time: 21:10
  */
 
-namespace AppBundle\Telegram;
+namespace AppBundle\Telegram\Command;
 
 use BoShurik\TelegramBotBundle\Telegram\Command\AbstractCommand;
 use BoShurik\TelegramBotBundle\Telegram\Command\PublicCommandInterface;

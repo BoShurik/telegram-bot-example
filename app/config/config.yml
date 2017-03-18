@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
 
     - { resource: services/telegram.yml }
+    - { resource: services/office.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -46,6 +47,11 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+doctrine_cache:
+    providers:
+        telegram_location_handler_cache:
+            type: php_file
 
 bo_shurik_telegram_bot:
     api:
