@@ -1,4 +1,11 @@
 telegram-bot-example
 ====================
 
-A Symfony project created on March 18, 2017, 8:29 pm.
+Example of creating telegram bot on top of [Symfony][1] and [BoShurikTelegramBotBundle][2]
+
+- Hello world command
+- Work with location
+- Work with multiple steps command
+
+[1]: http://symfony.com
+[2]: https://github.com/BoShurik/TelegramBotBundle
