@@ -20,7 +20,7 @@ class OfficeRepository
     {
         $this->init();
 
-        $offices = array();
+        $offices = [];
         foreach ($this->offices as $office) {
             $offices[(string)$office->getDistance($latitude, $longitude)] = $office;
         }

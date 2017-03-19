@@ -4,6 +4,11 @@ services:
         arguments:
             - "@doctrine_cache.providers.telegram_location_handler_cache"
 
+    app.telegram.order.handler:
+        class: AppBundle\Telegram\OrderHandler
+        arguments:
+            - "@doctrine_cache.providers.telegram_order_handler_cache"
+
     app.telegram.command.help:
         class: AppBundle\Telegram\Command\HelpCommand
         arguments:
@@ -21,5 +26,14 @@ services:
         arguments:
             - "@app.telegram.location.handler"
             - "@app.office.repository"
+        tags:
+            - { name: bo_shurik_telegram_bot.command }
+
+    app.telegram.command.order:
+        class: AppBundle\Telegram\Command\OrderCommand
+        arguments:
+            - "@app.telegram.order.handler"
+            - "@validator"
+            - "@event_dispatcher"
         tags:
             - { name: bo_shurik_telegram_bot.command }

@@ -12,3 +12,6 @@ parameters:
 
     telegram_bot_api_token: ~
     telegram_bot_name: ~
+
+    email_from: noreply@example.com
+    email_to: info@example.com
