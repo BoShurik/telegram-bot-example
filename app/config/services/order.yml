@@ -1,9 +1,0 @@
-services:
-    app.order.listener:
-        class: AppBundle\EventListener\OrderListener
-        arguments:
-            - "@app.mailer"
-            - "@templating"
-            - "%email_to%"
-        tags:
-            - { name: kernel.event_listener, event: app.order.submit, method: onOrderSubmit }

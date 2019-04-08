@@ -1,0 +1,8 @@
+parameters:
+    env(TELEGRAM_BOT_PROXY): ''
+
+boshurik_telegram_bot:
+    api:
+        token: "%env(TELEGRAM_BOT_TOKEN)%"
+        proxy: "%env(TELEGRAM_BOT_PROXY)%"
+    name: "%env(TELEGRAM_BOT_NAME)%"

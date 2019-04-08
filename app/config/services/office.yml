@@ -1,3 +1,0 @@
-services:
-    app.office.repository:
-        class: AppBundle\Repository\OfficeRepository

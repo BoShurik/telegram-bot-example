@@ -1,6 +1,0 @@
-services:
-    app.mailer:
-        class: AppBundle\Mail\Mailer
-        arguments:
-            - "@mailer"
-            - "%email_from%"
