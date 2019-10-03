@@ -43,6 +43,9 @@ class LocationCommand implements CommandInterface
      */
     public function isApplicable(Update $update)
     {
+        if (!$update->getMessage()) {
+            return false;
+        }
         if (!$update->getMessage()->getLocation() instanceof Location) {
             return false;
         }

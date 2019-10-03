@@ -6,6 +6,7 @@ Example of creating telegram bot on top of [Symfony][1] and [BoShurikTelegramBot
 - Hello world command
 - Work with location
 - Work with multiple steps command
+- Paging with inline keyboard
 
 [1]: http://symfony.com
 [2]: https://github.com/BoShurik/TelegramBotBundle

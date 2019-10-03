@@ -102,6 +102,9 @@ class OrderCommand extends AbstractCommand implements PublicCommandInterface
         if ($result = parent::isApplicable($update)) {
             return true;
         }
+        if (!$update->getMessage()) {
+            return false;
+        }
 
         return $this->orderHandler->hasData($update->getMessage()->getChat()->getId());
     }
