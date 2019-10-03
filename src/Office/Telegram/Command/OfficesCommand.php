@@ -50,7 +50,7 @@ class OfficesCommand extends AbstractLocationCommand implements PublicCommandInt
         $offices = $this->getOffices($location);
 
         foreach ($offices as $office) {
-            $reply = sprintf("*%s*\n*Расстояние*: _%s_ м",
+            $reply = sprintf("*%s*\n*Distance*: _%s_ м",
                 $office->getName(),
                 number_format($office->getDistance($location->getLatitude(), $location->getLongitude()), 2, ',', ' ')
             );
