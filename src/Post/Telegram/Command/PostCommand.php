@@ -52,6 +52,7 @@ class PostCommand extends AbstractCommand implements PublicCommandInterface
     {
         $posts = $this->repository->findAll();
         $index = (int)$this->getIndex($update);
+        $index = isset($posts[$index]) ? $index : 0;
 
         $messageId = $chatId = null;
         if ($update->getCallbackQuery()) {
