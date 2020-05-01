@@ -17,7 +17,7 @@ class Order
      * @var string
      *
      * @Assert\NotBlank(groups={"step2"})
-     * @Assert\Length(max="15" groups={"step2"})
+     * @Assert\Length(max="15", groups={"step2"})
      */
     private $phone;
 
