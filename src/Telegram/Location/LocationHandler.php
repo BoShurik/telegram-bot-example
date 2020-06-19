@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the boshurik-bot-example.
+ *
+ * (c) Alexander Borisov <boshurik@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Telegram\Location;
 
 use Psr\Cache\CacheItemPoolInterface;
@@ -16,44 +25,31 @@ class LocationHandler
      */
     private $lifetime;
 
-    public function __construct(CacheItemPoolInterface $cache, $lifetime = 0)
+    public function __construct(CacheItemPoolInterface $cache, int $lifetime = 0)
     {
         $this->cache = $cache;
         $this->lifetime = $lifetime;
     }
 
-    /**
-     * @param integer $chat
-     * @return bool
-     */
-    public function hasLocationCommand($chat)
+    public function hasLocationCommand(string $chat): bool
     {
-        return $this->cache->hasItem((string)$chat);
+        return $this->cache->hasItem($chat);
     }
 
-    /**
-     * @param integer $chat
-     * @return string|null
-     */
-    public function getLocationCommand($chat)
+    public function getLocationCommand(string $chat): ?string
     {
         if (!$this->hasLocationCommand($chat)) {
             return null;
-
         }
 
-        $item = $this->cache->getItem((string)$chat);
+        $item = $this->cache->getItem($chat);
 
         return $item->get();
     }
 
-    /**
-     * @param integer $chat
-     * @param string $id
-     */
-    public function setLocationCommand($chat, $id)
+    public function setLocationCommand(string $chat, string $id): void
     {
-        $item = $this->cache->getItem((string)$chat);
+        $item = $this->cache->getItem($chat);
         $item->set($id);
         if ($this->lifetime > 0) {
             $item->expiresAfter($this->lifetime);
@@ -62,11 +58,8 @@ class LocationHandler
         $this->cache->save($item);
     }
 
-    /**
-     * @param integer $chat
-     */
-    public function clearLocationCommand($chat)
+    public function clearLocationCommand(string $chat): void
     {
-        $this->cache->deleteItem((string)$chat);
+        $this->cache->deleteItem($chat);
     }
 }

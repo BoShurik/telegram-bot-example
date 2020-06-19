@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the boshurik-bot-example.
+ *
+ * (c) Alexander Borisov <boshurik@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Order\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -7,14 +16,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Order
 {
     /**
-     * @var string
+     * @var string|null
      *
      * @Assert\NotBlank(groups={"step1"})
      */
     private $name;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @Assert\NotBlank(groups={"step2"})
      * @Assert\Length(max="15", groups={"step2"})
@@ -22,7 +31,7 @@ class Order
     private $phone;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @Assert\NotBlank(groups={"step3"})
      * @Assert\Email(groups={"step3"})
@@ -30,70 +39,46 @@ class Order
     private $email;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $message;
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getPhone()
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
 
-    /**
-     * @param string $phone
-     */
-    public function setPhone($phone)
+    public function setPhone(?string $phone): void
     {
         $this->phone = $phone;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string
-     */
-    public function getMessage()
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
-    /**
-     * @param string $message
-     */
-    public function setMessage($message)
+    public function setMessage(?string $message): void
     {
         $this->message = $message;
     }

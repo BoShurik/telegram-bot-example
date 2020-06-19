@@ -1,8 +1,12 @@
 <?php
-/**
- * User: boshurik
- * Date: 03.10.19
- * Time: 19:10
+
+/*
+ * This file is part of the boshurik-bot-example.
+ *
+ * (c) Alexander Borisov <boshurik@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Post\Repository;
@@ -11,7 +15,10 @@ use App\Post\Model\Post;
 
 class PostRepository
 {
-    public function findAll()
+    /**
+     * @return Post[]
+     */
+    public function findAll(): array
     {
         return [
             new Post('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nibh nulla, rhoncus sed est nec, viverra rhoncus massa. Maecenas eros velit, mollis quis mi quis, finibus mollis metus. Curabitur et blandit ante, at aliquet ipsum. In metus elit, ullamcorper in consequat ac, facilisis at leo. Vestibulum vel justo at est commodo semper auctor eget lorem. Donec rutrum ante ut libero dignissim, eu ullamcorper eros dignissim. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet nibh justo. Vivamus semper pharetra pellentesque. In eget bibendum magna. Nunc at tellus non diam gravida varius ut pellentesque nunc. Nam id sem a nunc ultrices placerat vitae sit amet mi. Curabitur accumsan eros ac porttitor ullamcorper. '),

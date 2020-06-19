@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the boshurik-bot-example.
+ *
+ * (c) Alexander Borisov <boshurik@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Telegram\Location\Command;
 
 use App\Telegram\Location\LocationHandler;
@@ -33,9 +42,10 @@ class LocationCommand implements CommandInterface
      */
     public function execute(BotApi $api, Update $update)
     {
+        /** @var LocationCommandInterface $command */
         $command = $this->getLocationCommand($update->getMessage());
         $command->locationExecute($api, $update);
-        $this->locationHandler->clearLocationCommand($update->getMessage()->getChat()->getId());
+        $this->locationHandler->clearLocationCommand((string) $update->getMessage()->getChat()->getId());
     }
 
     /**
@@ -49,7 +59,7 @@ class LocationCommand implements CommandInterface
         if (!$update->getMessage()->getLocation() instanceof Location) {
             return false;
         }
-        if (!$this->locationHandler->hasLocationCommand($update->getMessage()->getChat()->getId())) {
+        if (!$this->locationHandler->hasLocationCommand((string) $update->getMessage()->getChat()->getId())) {
             return false;
         }
         if (!$command = $this->getLocationCommand($update->getMessage())) {
@@ -59,13 +69,9 @@ class LocationCommand implements CommandInterface
         return true;
     }
 
-    /**
-     * @param Message $message
-     * @return LocationCommandInterface|null
-     */
-    private function getLocationCommand(Message $message)
+    private function getLocationCommand(Message $message): ?LocationCommandInterface
     {
-        $id = $this->locationHandler->getLocationCommand($message->getChat()->getId());
+        $id = $this->locationHandler->getLocationCommand((string) $message->getChat()->getId());
         foreach ($this->commandRegistry->getCommands() as $command) {
             if (!$command instanceof LocationCommandInterface) {
                 continue;

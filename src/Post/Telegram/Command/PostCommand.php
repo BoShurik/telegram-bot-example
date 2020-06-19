@@ -1,8 +1,12 @@
 <?php
-/**
- * User: boshurik
- * Date: 03.10.19
- * Time: 19:15
+
+/*
+ * This file is part of the boshurik-bot-example.
+ *
+ * (c) Alexander Borisov <boshurik@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Post\Telegram\Command;
@@ -51,7 +55,7 @@ class PostCommand extends AbstractCommand implements PublicCommandInterface
     public function execute(BotApi $api, Update $update)
     {
         $posts = $this->repository->findAll();
-        $index = (int)$this->getIndex($update);
+        $index = (int) $this->getIndex($update);
         $index = isset($posts[$index]) ? $index : 0;
 
         $messageId = $chatId = null;
@@ -62,7 +66,7 @@ class PostCommand extends AbstractCommand implements PublicCommandInterface
             $chat = $update->getMessage()->getChat();
         }
 
-        $this->post($api, $posts[$index], $index, $chat->getId(), $messageId);
+        $this->post($api, $posts[$index], $index, (string) $chat->getId(), $messageId);
     }
 
     /**
@@ -80,16 +84,16 @@ class PostCommand extends AbstractCommand implements PublicCommandInterface
     private function getIndex(Update $update): ?int
     {
         if ($update->getMessage() && preg_match(self::REGEX_INDEX, $update->getMessage()->getText(), $matches)) {
-            return $matches[1];
+            return (int) $matches[1];
         }
         if ($update->getCallbackQuery() && preg_match(self::REGEX_INDEX, $update->getCallbackQuery()->getData(), $matches)) {
-            return $matches[1];
+            return (int) $matches[1];
         }
 
         return null;
     }
 
-    private function post(BotApi $api, Post $post, $index, $chatId, $messageId = null)
+    private function post(BotApi $api, Post $post, int $index, string $chatId, int $messageId = null): void
     {
         $prev = $next = null;
         if ($index - 1 >= 0) {
@@ -101,10 +105,10 @@ class PostCommand extends AbstractCommand implements PublicCommandInterface
 
         $buttons = [];
         if ($prev !== null) {
-            $buttons[] = ['text' => 'Prev', 'callback_data' => '/post_'. $prev];
+            $buttons[] = ['text' => 'Prev', 'callback_data' => '/post_'.$prev];
         }
         if ($next !== null) {
-            $buttons[] = ['text' => 'Next', 'callback_data' => '/post_'. $next];
+            $buttons[] = ['text' => 'Next', 'callback_data' => '/post_'.$next];
         }
 
         $text = sprintf("%d *%s*\n%s", $index, $post->getName(), $post->getDescription());

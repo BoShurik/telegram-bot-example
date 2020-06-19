@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the boshurik-bot-example.
+ *
+ * (c) Alexander Borisov <boshurik@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Order\Telegram;
 
 use App\Order\Model\Order;
@@ -7,8 +16,8 @@ use Psr\Cache\CacheItemPoolInterface;
 
 class OrderHandler
 {
-    const PREFIX_ORDER = 'order_';
-    const PREFIX_STEP = 'step_';
+    public const PREFIX_ORDER = 'order_';
+    public const PREFIX_STEP = 'step_';
 
     /**
      * @var CacheItemPoolInterface
@@ -20,27 +29,20 @@ class OrderHandler
      */
     private $lifetime;
 
-    public function __construct(CacheItemPoolInterface $cache, $lifetime = 0)
+    public function __construct(CacheItemPoolInterface $cache, int $lifetime = 0)
     {
         $this->cache = $cache;
         $this->lifetime = $lifetime;
     }
 
-    /**
-     * @param string $id
-     * @return bool
-     */
-    public function hasData($id)
+    public function hasData(string $id): bool
     {
         $key = $this->getKey(self::PREFIX_STEP, $id);
 
         return $this->cache->hasItem($key);
     }
 
-    /**
-     * @param string $id
-     */
-    public function clearData($id)
+    public function clearData(string $id): void
     {
         $stepKey = $this->getKey(self::PREFIX_STEP, $id);
         $orderKey = $this->getKey(self::PREFIX_ORDER, $id);
@@ -48,11 +50,7 @@ class OrderHandler
         $this->cache->deleteItems([$stepKey, $orderKey]);
     }
 
-    /**
-     * @param string $id
-     * @return int
-     */
-    public function getCurrentStep($id)
+    public function getCurrentStep(string $id): int
     {
         $key = $this->getKey(self::PREFIX_STEP, $id);
         if (!$this->cache->hasItem($key)) {
@@ -61,14 +59,10 @@ class OrderHandler
 
         $item = $this->cache->getItem($key);
 
-        return (int)$item->get();
+        return (int) $item->get();
     }
 
-    /**
-     * @param string $id
-     * @param int $step
-     */
-    public function setCurrentStep($id, $step)
+    public function setCurrentStep(string $id, int $step): void
     {
         $key = $this->getKey(self::PREFIX_STEP, $id);
 
@@ -81,11 +75,7 @@ class OrderHandler
         $this->cache->save($item);
     }
 
-    /**
-     * @param string $id
-     * @return Order
-     */
-    public function getOrder($id)
+    public function getOrder(string $id): Order
     {
         $key = $this->getKey(self::PREFIX_ORDER, $id);
         if (!$this->cache->hasItem($key)) {
@@ -97,11 +87,7 @@ class OrderHandler
         return $item->get();
     }
 
-    /**
-     * @param string $id
-     * @param Order $order
-     */
-    public function setOrder($id, Order $order)
+    public function setOrder(string $id, Order $order): void
     {
         $key = $this->getKey(self::PREFIX_ORDER, $id);
 
@@ -114,22 +100,12 @@ class OrderHandler
         $this->cache->save($item);
     }
 
-    /**
-     * @return Order
-     */
-    public function createOrder()
+    public function createOrder(): Order
     {
-        $order = new Order();
-
-        return $order;
+        return new Order();
     }
 
-    /**
-     * @param string $prefix
-     * @param string $id
-     * @return string
-     */
-    private function getKey($prefix, $id)
+    private function getKey(string $prefix, string $id): string
     {
         return sprintf('%s%s', $prefix, $id);
     }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the boshurik-bot-example.
+ *
+ * (c) Alexander Borisov <boshurik@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Office\Model;
 
 class Office
@@ -19,7 +28,7 @@ class Office
      */
     private $longitude;
 
-    public function __construct($name, $latitude, $longitude)
+    public function __construct(string $name, float $latitude, float $longitude)
     {
         $this->name = $name;
         $this->latitude = $latitude;
@@ -29,6 +38,7 @@ class Office
     /**
      * @param float $latitude
      * @param float $longitude
+     *
      * @return float
      */
     public function getDistance($latitude, $longitude)
@@ -42,33 +52,24 @@ class Office
 
         $longitudeDelta = $longitudeToRad - $longitudeFromRad;
 
-        $a = pow(cos($latitudeToRad) * sin($longitudeDelta), 2) + pow(cos($latitudeFromRad) * sin($latitudeToRad) - sin($latitudeFromRad) * cos($latitudeToRad) * cos($longitudeDelta), 2);
+        $a = (cos($latitudeToRad) * sin($longitudeDelta)) ** 2 + (cos($latitudeFromRad) * sin($latitudeToRad) - sin($latitudeFromRad) * cos($latitudeToRad) * cos($longitudeDelta)) ** 2;
         $b = sin($latitudeFromRad) * sin($latitudeToRad) + cos($latitudeFromRad) * cos($latitudeToRad) * cos($longitudeDelta);
         $angle = atan2(sqrt($a), $b);
 
         return $angle * $earthRadius;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return float
-     */
-    public function getLatitude()
+    public function getLatitude(): float
     {
         return $this->latitude;
     }
 
-    /**
-     * @return float
-     */
-    public function getLongitude()
+    public function getLongitude(): float
     {
         return $this->longitude;
     }

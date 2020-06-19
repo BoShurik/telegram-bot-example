@@ -5,16 +5,23 @@
         "php": "^7.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "boshurik/telegram-bot-bundle": "^3.1",
+        "boshurik/telegram-bot-bundle": "^4.1",
         "sensio/framework-extra-bundle": "^5.3",
-        "symfony/console": "4.2.*",
-        "symfony/dotenv": "4.2.*",
+        "symfony/console": "5.1.*",
+        "symfony/dotenv": "5.1.*",
         "symfony/flex": "^1.1",
-        "symfony/framework-bundle": "4.2.*",
-        "symfony/swiftmailer-bundle": "^3.2",
-        "symfony/twig-bundle": "4.2.*",
-        "symfony/validator": "4.2.*",
-        "symfony/yaml": "4.2.*"
+        "symfony/framework-bundle": "5.1.*",
+        "symfony/mailer": "5.1.*",
+        "symfony/messenger": "5.1.*",
+        "symfony/security-bundle": "5.1.*",
+        "symfony/twig-bundle": "5.1.*",
+        "symfony/validator": "5.1.*",
+        "symfony/yaml": "5.1.*"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "vimeo/psalm": "^3.11",
+        "psalm/plugin-symfony": "^1.2"
     },
     "config": {
         "preferred-install": {
@@ -50,6 +57,13 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "cs-check": "vendor/bin/php-cs-fixer fix --allow-risky=yes --diff --ansi --dry-run",
+        "cs-fix": "vendor/bin/php-cs-fixer fix --allow-risky=yes --diff --ansi",
+        "psalm": "vendor/bin/psalm",
+        "checks": [
+            "@cs-check",
+            "@psalm"
         ]
     },
     "conflict": {
@@ -57,8 +71,8 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "4.2.*"
+            "allow-contrib": true,
+            "require": "5.1.*"
         }
     }
 }

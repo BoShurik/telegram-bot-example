@@ -1,7 +1,7 @@
-parameters:
-    env(TELEGRAM_BOT_PROXY): ''
-
 boshurik_telegram_bot:
     api:
         token: "%env(TELEGRAM_BOT_TOKEN)%"
-        proxy: "%env(TELEGRAM_BOT_PROXY)%"
+    guard:
+        default_target_route: login_private  # redirect after login success
+        guard_route: login_guard        # guard route
+        login_route: login_public       # optional, if login fails user will be redirected there

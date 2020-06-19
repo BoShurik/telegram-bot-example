@@ -1,9 +1,17 @@
 <?php
 
+/*
+ * This file is part of the boshurik-bot-example.
+ *
+ * (c) Alexander Borisov <boshurik@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Order\Telegram\Command;
 
 use App\Order\Event\OrderEvent;
-use App\Order\Event\OrderEvents;
 use App\Order\Model\Order;
 use App\Order\Telegram\OrderHandler;
 use BoShurik\TelegramBotBundle\Telegram\Command\AbstractCommand;
@@ -61,7 +69,7 @@ class OrderCommand extends AbstractCommand implements PublicCommandInterface
      */
     public function execute(BotApi $api, Update $update)
     {
-        $id = $update->getMessage()->getChat()->getId();
+        $id = (string) $update->getMessage()->getChat()->getId();
 
         if ($this->isCancelStep($update)) {
             $this->cancelStep($api, $update->getMessage(), $id);
@@ -106,17 +114,10 @@ class OrderCommand extends AbstractCommand implements PublicCommandInterface
             return false;
         }
 
-        return $this->orderHandler->hasData($update->getMessage()->getChat()->getId());
+        return $this->orderHandler->hasData((string) $update->getMessage()->getChat()->getId());
     }
 
-    /**
-     * @param BotApi $api
-     * @param Message $message
-     * @param string $chatId
-     * @param Order $order
-     * @return bool
-     */
-    protected function step0(BotApi $api, Message $message, $chatId, Order $order)
+    protected function step0(BotApi $api, Message $message, string $chatId, Order $order): bool
     {
         $api->sendMessage($chatId, 'To cancel type "/order cancel"');
         $api->sendMessage($chatId, 'Enter your name');
@@ -124,14 +125,7 @@ class OrderCommand extends AbstractCommand implements PublicCommandInterface
         return true;
     }
 
-    /**
-     * @param BotApi $api
-     * @param Message $message
-     * @param string $chatId
-     * @param Order $order
-     * @return bool
-     */
-    protected function step1(BotApi $api, Message $message, $chatId, Order $order)
+    protected function step1(BotApi $api, Message $message, string $chatId, Order $order): bool
     {
         $order->setName($message->getText());
 
@@ -144,18 +138,10 @@ class OrderCommand extends AbstractCommand implements PublicCommandInterface
 
         $api->sendMessage($chatId, 'Enter your phone');
 
-
         return true;
     }
 
-    /**
-     * @param BotApi $api
-     * @param Message $message
-     * @param string $chatId
-     * @param Order $order
-     * @return bool
-     */
-    protected function step2(BotApi $api, Message $message, $chatId, Order $order)
+    protected function step2(BotApi $api, Message $message, string $chatId, Order $order): bool
     {
         $order->setPhone($message->getText());
 
@@ -171,14 +157,7 @@ class OrderCommand extends AbstractCommand implements PublicCommandInterface
         return true;
     }
 
-    /**
-     * @param BotApi $api
-     * @param Message $message
-     * @param string $chatId
-     * @param Order $order
-     * @return bool
-     */
-    protected function step3(BotApi $api, Message $message, $chatId, Order $order)
+    protected function step3(BotApi $api, Message $message, string $chatId, Order $order): bool
     {
         $order->setEmail($message->getText());
 
@@ -194,14 +173,7 @@ class OrderCommand extends AbstractCommand implements PublicCommandInterface
         return true;
     }
 
-    /**
-     * @param BotApi $api
-     * @param Message $message
-     * @param string $chatId
-     * @param Order $order
-     * @return bool
-     */
-    protected function step4(BotApi $api, Message $message, $chatId, Order $order)
+    protected function step4(BotApi $api, Message $message, string $chatId, Order $order): bool
     {
         $order->setMessage($message->getText());
 
@@ -215,58 +187,33 @@ class OrderCommand extends AbstractCommand implements PublicCommandInterface
         return true;
     }
 
-    /**
-     * @param BotApi $api
-     * @param Message $message
-     * @param string $chatId
-     * @param Order $order
-     */
-    protected function finalStep(BotApi $api, Message $message, $chatId, Order $order)
+    protected function finalStep(BotApi $api, Message $message, string $chatId, Order $order): void
     {
-        $this->eventDispatcher->dispatch(OrderEvents::SUBMIT, new OrderEvent($order));
+        $this->eventDispatcher->dispatch(new OrderEvent($order));
         $api->sendMessage($chatId, 'Thank you!');
     }
 
-    /**
-     * @param BotApi $api
-     * @param Message $message
-     * @param string $chatId
-     */
-    protected function cancelStep(BotApi $api, Message $message, $chatId)
+    protected function cancelStep(BotApi $api, Message $message, string $chatId): void
     {
         $this->orderHandler->clearData($chatId);
     }
 
-    /**
-     * @param Order $order
-     * @param string $group
-     * @return ConstraintViolationListInterface
-     */
-    protected function validateOrder(Order $order, $group)
+    protected function validateOrder(Order $order, string $group): ConstraintViolationListInterface
     {
         return $this->validator->validate($order, null, [$group]);
     }
 
-    /**
-     * @param string $chatId
-     * @param BotApi $api
-     * @param ConstraintViolationListInterface $violations
-     */
-    protected function sendErrorMessage($chatId, BotApi $api, ConstraintViolationListInterface $violations)
+    protected function sendErrorMessage(string $chatId, BotApi $api, ConstraintViolationListInterface $violations): void
     {
         $messages = [];
         /** @var ConstraintViolationInterface $violation */
         foreach ($violations as $violation) {
-            $messages[] = sprintf('%s - %s', $violation->getInvalidValue(), $violation->getMessage());
+            $messages[] = sprintf('%s - %s', $violation->getInvalidValue(), (string) $violation->getMessage());
         }
         $api->sendMessage($chatId, implode("\n", $messages));
     }
 
-    /**
-     * @param Update $update
-     * @return bool
-     */
-    protected function isCancelStep(Update $update)
+    protected function isCancelStep(Update $update): bool
     {
         if (!parent::isApplicable($update)) {
             return false;

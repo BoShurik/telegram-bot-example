@@ -1,3 +1,6 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+login_controllers:
+    resource: ../src/Login/Controller/
+    type: annotation
+
+login_guard:
+    path: /_telegram/login
