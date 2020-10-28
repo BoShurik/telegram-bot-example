@@ -12,6 +12,8 @@
 namespace App\Post\Repository;
 
 use App\Post\Model\Post;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 
 class PostRepository
 {
@@ -27,5 +29,10 @@ class PostRepository
             new Post('Nunc ornare pellentesque diam, sed interdum ex lobortis eu. Duis blandit nisi non tellus viverra volutpat. Sed erat arcu, ultricies quis eleifend non, finibus nec nisi. Duis nibh nisi, sagittis ut urna eget, tempor bibendum mi. Vestibulum tempus augue dignissim tortor ultricies volutpat. Sed massa dolor, posuere aliquam gravida eget, volutpat eget massa. Sed pretium rhoncus nibh nec tincidunt. Sed nec ante nibh. Vestibulum vestibulum, mi eget vehicula molestie, libero lacus cursus nisl, id luctus ligula ante in mauris. Ut aliquet neque nibh, sed fringilla enim ullamcorper ut. Aliquam lacinia risus ac erat rutrum condimentum. '),
             new Post('Vivamus imperdiet felis viverra, tristique dui sed, pulvinar nibh. Nam euismod venenatis tempor. Vivamus a augue bibendum erat accumsan condimentum. Nam nec ante risus. Donec rhoncus libero non placerat facilisis. Etiam pharetra porta dui ut faucibus. Ut rutrum elit arcu, quis sagittis ipsum luctus et. '),
         ];
+    }
+
+    public function findAllPaginated(): Pagerfanta
+    {
+        return new Pagerfanta(new ArrayAdapter($this->findAll()));
     }
 }

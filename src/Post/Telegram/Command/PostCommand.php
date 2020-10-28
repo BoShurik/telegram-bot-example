@@ -12,25 +12,30 @@
 namespace App\Post\Telegram\Command;
 
 use App\Post\Model\Post;
+use App\Post\Pagerfanta\InlineKeyboardMarkupFactory;
 use App\Post\Repository\PostRepository;
 use BoShurik\TelegramBotBundle\Telegram\Command\AbstractCommand;
 use BoShurik\TelegramBotBundle\Telegram\Command\PublicCommandInterface;
+use Pagerfanta\Pagerfanta;
 use TelegramBot\Api\BotApi;
-use TelegramBot\Api\Types\Inline\InlineKeyboardMarkup;
 use TelegramBot\Api\Types\Update;
 
 class PostCommand extends AbstractCommand implements PublicCommandInterface
 {
-    private const REGEX_INDEX = '#/post_(\d+)#';
-
     /**
      * @var PostRepository
      */
     private $repository;
 
-    public function __construct(PostRepository $repository)
+    /**
+     * @var InlineKeyboardMarkupFactory
+     */
+    private $markupFactory;
+
+    public function __construct(PostRepository $repository, InlineKeyboardMarkupFactory $markupFactory)
     {
         $this->repository = $repository;
+        $this->markupFactory = $markupFactory;
     }
 
     /**
@@ -54,11 +59,15 @@ class PostCommand extends AbstractCommand implements PublicCommandInterface
      */
     public function execute(BotApi $api, Update $update)
     {
-        $posts = $this->repository->findAll();
-        $index = (int) $this->getIndex($update);
-        $index = isset($posts[$index]) ? $index : 0;
+        if (!$page = (int) $this->getCommandParameters($update)) {
+            $page = 1;
+        }
 
-        $messageId = $chatId = null;
+        $posts = $this->repository->findAllPaginated();
+        $posts->setMaxPerPage(1);
+        $posts->setCurrentPage($page);
+
+        $messageId = null;
         if ($update->getCallbackQuery()) {
             $chat = $update->getCallbackQuery()->getMessage()->getChat();
             $messageId = $update->getCallbackQuery()->getMessage()->getMessageId();
@@ -66,71 +75,43 @@ class PostCommand extends AbstractCommand implements PublicCommandInterface
             $chat = $update->getMessage()->getChat();
         }
 
-        $this->post($api, $posts[$index], $index, (string) $chat->getId(), $messageId);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isApplicable(Update $update)
-    {
-        if (parent::isApplicable($update)) {
-            return true;
-        }
-
-        return $this->getIndex($update) !== null;
-    }
-
-    private function getIndex(Update $update): ?int
-    {
-        if ($update->getMessage() && preg_match(self::REGEX_INDEX, $update->getMessage()->getText(), $matches)) {
-            return (int) $matches[1];
-        }
-        if ($update->getCallbackQuery() && preg_match(self::REGEX_INDEX, $update->getCallbackQuery()->getData(), $matches)) {
-            return (int) $matches[1];
-        }
-
-        return null;
-    }
-
-    private function post(BotApi $api, Post $post, int $index, string $chatId, int $messageId = null): void
-    {
-        $prev = $next = null;
-        if ($index - 1 >= 0) {
-            $prev = $index - 1;
-        }
-        if ($index + 1 < 5) {
-            $next = $index + 1;
-        }
-
-        $buttons = [];
-        if ($prev !== null) {
-            $buttons[] = ['text' => 'Prev', 'callback_data' => '/post_'.$prev];
-        }
-        if ($next !== null) {
-            $buttons[] = ['text' => 'Next', 'callback_data' => '/post_'.$next];
-        }
-
-        $text = sprintf("%d *%s*\n%s", $index, $post->getName(), $post->getDescription());
+        $text = $this->getContent($posts);
 
         if ($messageId) {
             $api->editMessageText(
-                $chatId,
+                $chat->getId(),
                 $messageId,
                 $text,
                 'markdown',
                 false,
-                new InlineKeyboardMarkup([$buttons])
+                $this->markupFactory->create($posts)
             );
         } else {
             $api->sendMessage(
-                $chatId,
+                $chat->getId(),
                 $text,
                 'markdown',
                 false,
                 null,
-                new InlineKeyboardMarkup([$buttons])
+                $this->markupFactory->create($posts)
             );
         }
+    }
+
+    private function getContent(Pagerfanta $pagerfanta): string
+    {
+        $text = '';
+
+        /** @var Post $post */
+        foreach ($pagerfanta as $post) {
+            $text .= sprintf("%d *%s*\n%s", $pagerfanta->getCurrentPage(), $post->getName(), $post->getDescription());
+        }
+
+        return $text;
+    }
+
+    protected function getTarget(): int
+    {
+        return self::TARGET_ALL;
     }
 }
