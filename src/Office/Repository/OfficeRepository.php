@@ -18,8 +18,16 @@ class OfficeRepository
     /**
      * @var Office[]|null
      */
-    private $offices;
+    private ?array $offices;
 
+    public function __construct()
+    {
+        $this->offices = null;
+    }
+
+    /**
+     * @return Office[]
+     */
     public function findNearest(float $latitude, float $longitude, int $count = 3): array
     {
         $this->init();

@@ -11,13 +11,17 @@
 
 namespace App\Login\Security;
 
-use BoShurik\TelegramBotBundle\Guard\UserLoaderInterface;
+use BoShurik\TelegramBotBundle\Authenticator\UserLoaderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserLoader implements UserLoaderInterface
 {
+    public function __construct(private UserManager $userManager)
+    {
+    }
+
     public function loadByTelegramId(string $id): ?UserInterface
     {
-        return null; // We dont have storage for users
+        return $this->userManager->find($id);
     }
 }

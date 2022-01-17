@@ -18,36 +18,15 @@ use Twig\Environment;
 
 class OrderListener implements EventSubscriberInterface
 {
-    /**
-     * @var Mailer
-     */
-    private $mailer;
-
-    /**
-     * @var Environment
-     */
-    private $twig;
-
-    /**
-     * @var string
-     */
-    private $to;
-
-    /**
-     * @inheritDoc
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             OrderEvent::class => 'onOrderSubmit',
         ];
     }
 
-    public function __construct(Mailer $mailer, Environment $twig, $to)
+    public function __construct(private Mailer $mailer, private Environment $twig, private string $to)
     {
-        $this->mailer = $mailer;
-        $this->twig = $twig;
-        $this->to = $to;
     }
 
     public function onOrderSubmit(OrderEvent $event): void

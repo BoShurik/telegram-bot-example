@@ -2,26 +2,28 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.2",
+        "php": "^8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "boshurik/telegram-bot-bundle": "^4.1",
-        "sensio/framework-extra-bundle": "^5.3",
-        "symfony/console": "5.1.*",
-        "symfony/dotenv": "5.1.*",
-        "symfony/flex": "^1.1",
-        "symfony/framework-bundle": "5.1.*",
-        "symfony/mailer": "5.1.*",
-        "symfony/messenger": "5.1.*",
-        "symfony/security-bundle": "5.1.*",
-        "symfony/twig-bundle": "5.1.*",
-        "symfony/validator": "5.1.*",
-        "symfony/yaml": "5.1.*"
+        "boshurik/telegram-bot-bundle": "^5.0",
+        "odolbeau/phone-number-bundle": "^3.6",
+        "sensio/framework-extra-bundle": "^6.2",
+        "symfony/console": "6.0.*",
+        "symfony/dotenv": "6.0.*",
+        "symfony/flex": "^2.0",
+        "symfony/framework-bundle": "6.0.*",
+        "symfony/mailer": "6.0.*",
+        "symfony/messenger": "6.0.*",
+        "symfony/runtime": "6.0.*",
+        "symfony/security-bundle": "6.0.*",
+        "symfony/twig-bundle": "6.0.*",
+        "symfony/validator": "6.0.*",
+        "symfony/yaml": "6.0.*"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
-        "vimeo/psalm": "^3.11",
-        "psalm/plugin-symfony": "^1.2"
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "vimeo/psalm": "^4.0",
+        "psalm/plugin-symfony": "^3.0"
     },
     "config": {
         "preferred-install": {
@@ -72,7 +74,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": true,
-            "require": "5.1.*"
+            "require": "6.0.*"
         }
     }
 }

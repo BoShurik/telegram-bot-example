@@ -16,10 +16,7 @@ use TelegramBot\Api\Types\Update;
 
 class HelpCommand extends BaseCommand
 {
-    /**
-     * @inheritDoc
-     */
-    public function isApplicable(Update $update)
+    public function isApplicable(Update $update): bool
     {
         return $update->getMessage() !== null;
     }

@@ -18,28 +18,16 @@ use TelegramBot\Api\Types\Update;
 
 abstract class AbstractLocationCommand extends AbstractCommand implements LocationCommandInterface
 {
-    /**
-     * @var LocationHandler
-     */
-    private $locationCommandManager;
-
-    public function __construct(LocationHandler $locationHandler)
+    public function __construct(private LocationHandler $locationHandler)
     {
-        $this->locationCommandManager = $locationHandler;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function execute(BotApi $api, Update $update)
+    public function execute(BotApi $api, Update $update): void
     {
-        $this->locationCommandManager->setLocationCommand((string) $update->getMessage()->getChat()->getId(), $this->getId());
+        $this->locationHandler->setLocationCommand((string) $update->getMessage()->getChat()->getId(), $this->getId());
         $api->sendMessage($update->getMessage()->getChat()->getId(), $this->getMessage());
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getId(): string
     {
         return $this->getName();

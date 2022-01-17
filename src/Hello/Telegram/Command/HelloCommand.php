@@ -18,26 +18,17 @@ use TelegramBot\Api\Types\Update;
 
 class HelloCommand extends AbstractCommand implements PublicCommandInterface
 {
-    /**
-     * @inheritDoc
-     */
-    public function getName()
+    public function getName(): string
     {
         return '/hello';
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Example command';
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function execute(BotApi $api, Update $update)
+    public function execute(BotApi $api, Update $update): void
     {
         preg_match(self::REGEXP, $update->getMessage()->getText(), $matches);
         $who = !empty($matches[3]) ? $matches[3] : 'World';

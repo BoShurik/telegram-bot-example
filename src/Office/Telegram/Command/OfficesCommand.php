@@ -22,44 +22,29 @@ use TelegramBot\Api\Types\Update;
 
 class OfficesCommand extends AbstractLocationCommand implements PublicCommandInterface
 {
-    /**
-     * @var OfficeRepository
-     */
-    private $officeRepository;
-
-    public function __construct(LocationHandler $locationHandler, OfficeRepository $officeRepository)
+    public function __construct(LocationHandler $locationHandler, private OfficeRepository $officeRepository)
     {
         parent::__construct($locationHandler);
-
-        $this->officeRepository = $officeRepository;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getName()
+    public function getName(): string
     {
         return '/offices';
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Nearest offices';
     }
 
-    /**
-     * @inheritDoc
-     */
     public function locationExecute(BotApi $api, Update $update): void
     {
         $location = $update->getMessage()->getLocation();
         $offices = $this->getOffices($location);
 
         foreach ($offices as $office) {
-            $reply = sprintf("*%s*\n*Distance*: _%s_ м",
+            $reply = sprintf(
+                "*%s*\n*Distance*: _%s_ м",
                 $office->getName(),
                 number_format($office->getDistance($location->getLatitude(), $location->getLongitude()), 2, ',', ' ')
             );

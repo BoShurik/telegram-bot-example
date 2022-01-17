@@ -11,13 +11,20 @@
 
 namespace App\Login\Security;
 
-use BoShurik\TelegramBotBundle\Guard\UserFactoryInterface;
+use BoShurik\TelegramBotBundle\Authenticator\UserFactoryInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserFactory implements UserFactoryInterface
 {
+    public function __construct(private UserManager $userManager)
+    {
+    }
+
     public function createFromTelegram(array $data): UserInterface
     {
-        return new User($data['username'], $data['id']);
+        $user = new User($data['username'], $data['id']);
+        $this->userManager->save($user);
+
+        return $user;
     }
 }

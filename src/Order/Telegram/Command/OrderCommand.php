@@ -26,48 +26,24 @@ use TelegramBot\Api\Types\Update;
 
 class OrderCommand extends AbstractCommand implements PublicCommandInterface
 {
-    /**
-     * @var OrderHandler
-     */
-    private $orderHandler;
-
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    public function __construct(OrderHandler $orderHandler, ValidatorInterface $validator, EventDispatcherInterface $eventDispatcher)
-    {
-        $this->orderHandler = $orderHandler;
-        $this->validator = $validator;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(
+        private OrderHandler $orderHandler,
+        private ValidatorInterface $validator,
+        private EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getName()
+    public function getName(): string
     {
         return '/order';
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Send order';
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function execute(BotApi $api, Update $update)
+    public function execute(BotApi $api, Update $update): void
     {
         $id = (string) $update->getMessage()->getChat()->getId();
 
@@ -102,12 +78,9 @@ class OrderCommand extends AbstractCommand implements PublicCommandInterface
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function isApplicable(Update $update)
+    public function isApplicable(Update $update): bool
     {
-        if ($result = parent::isApplicable($update)) {
+        if (parent::isApplicable($update)) {
             return true;
         }
         if (!$update->getMessage()) {

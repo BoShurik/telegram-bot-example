@@ -19,20 +19,8 @@ class OrderHandler
     public const PREFIX_ORDER = 'order_';
     public const PREFIX_STEP = 'step_';
 
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $cache;
-
-    /**
-     * @var int
-     */
-    private $lifetime;
-
-    public function __construct(CacheItemPoolInterface $cache, int $lifetime = 0)
+    public function __construct(private CacheItemPoolInterface $cache, private int $lifetime = 0)
     {
-        $this->cache = $cache;
-        $this->lifetime = $lifetime;
     }
 
     public function hasData(string $id): bool

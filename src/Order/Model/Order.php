@@ -11,37 +11,23 @@
 
 namespace App\Order\Model;
 
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Order
 {
-    /**
-     * @var string|null
-     *
-     * @Assert\NotBlank(groups={"step1"})
-     */
-    private $name;
+    #[Assert\NotBlank(groups: ['step1'])]
+    private ?string $name;
 
-    /**
-     * @var string|null
-     *
-     * @Assert\NotBlank(groups={"step2"})
-     * @Assert\Length(max="15", groups={"step2"})
-     */
-    private $phone;
+    #[Assert\NotBlank(groups: ['step2'])]
+    #[PhoneNumber(groups: ['step2'])]
+    private ?string $phone;
 
-    /**
-     * @var string|null
-     *
-     * @Assert\NotBlank(groups={"step3"})
-     * @Assert\Email(groups={"step3"})
-     */
-    private $email;
+    #[Assert\NotBlank(groups: ['step3'])]
+    #[Assert\Email(groups: ['step3'])]
+    private ?string $email;
 
-    /**
-     * @var string|null
-     */
-    private $message;
+    private ?string $message;
 
     public function getName(): ?string
     {

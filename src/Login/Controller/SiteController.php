@@ -18,23 +18,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use TelegramBot\Api\BotApi;
 
-/**
- * @Route(name="login_")
- */
+#[Route(name: 'login_')]
 class SiteController extends AbstractController
 {
-    /**
-     * @Route(path="/", name="public")
-     */
+    #[Route(path: '/', name: 'public')]
     public function publicAction(): Response
     {
         return $this->render('login/site/public.html.twig');
     }
 
-    /**
-     * @Route(path="/private", name="private")
-     * @IsGranted("ROLE_USER")
-     */
+    #[Route(path: '/private', name: 'private')]
+    #[IsGranted('ROLE_USER')]
     public function privateAction(BotApi $api): Response
     {
         $user = $this->getUser();
@@ -42,7 +36,7 @@ class SiteController extends AbstractController
             throw new \LogicException();
         }
         if ($user->getId()) {
-            $api->sendMessage($user->getId(), 'Hello from public area!');
+            $api->sendMessage($user->getId(), 'Hello from private area!');
         }
 
         return $this->render('login/site/private.html.twig');

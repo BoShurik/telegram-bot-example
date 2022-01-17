@@ -16,20 +16,8 @@ use Symfony\Component\Mime\Email;
 
 class Mailer
 {
-    /**
-     * @var MailerInterface
-     */
-    private $mailer;
-
-    /**
-     * @var string
-     */
-    private $from;
-
-    public function __construct(MailerInterface $mailer, string $from)
+    public function __construct(private MailerInterface $mailer, private string $from)
     {
-        $this->mailer = $mailer;
-        $this->from = $from;
     }
 
     /**

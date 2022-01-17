@@ -13,35 +13,11 @@ namespace App\Office\Model;
 
 class Office
 {
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var float
-     */
-    private $latitude;
-
-    /**
-     * @var float
-     */
-    private $longitude;
-
-    public function __construct(string $name, float $latitude, float $longitude)
+    public function __construct(private string $name, private float $latitude, private float $longitude)
     {
-        $this->name = $name;
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
     }
 
-    /**
-     * @param float $latitude
-     * @param float $longitude
-     *
-     * @return float
-     */
-    public function getDistance($latitude, $longitude)
+    public function getDistance(float $latitude, float $longitude): float
     {
         $earthRadius = 6371000; // Meters
 

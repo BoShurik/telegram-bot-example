@@ -23,36 +23,21 @@ class PostCommand extends AbstractCommand implements PublicCommandInterface
 {
     private const REGEX_INDEX = '#/post_(\d+)#';
 
-    /**
-     * @var PostRepository
-     */
-    private $repository;
-
-    public function __construct(PostRepository $repository)
+    public function __construct(private PostRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getName()
+    public function getName(): string
     {
         return '/post';
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Post list';
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function execute(BotApi $api, Update $update)
+    public function execute(BotApi $api, Update $update): void
     {
         $posts = $this->repository->findAll();
         $index = (int) $this->getIndex($update);
@@ -69,10 +54,7 @@ class PostCommand extends AbstractCommand implements PublicCommandInterface
         $this->post($api, $posts[$index], $index, (string) $chat->getId(), $messageId);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function isApplicable(Update $update)
+    public function isApplicable(Update $update): bool
     {
         if (parent::isApplicable($update)) {
             return true;

@@ -13,14 +13,8 @@ namespace App\Post\Model;
 
 class Post
 {
-    /**
-     * @var string
-     */
-    private $description;
-
-    public function __construct(string $description)
+    public function __construct(private string $description)
     {
-        $this->description = $description;
     }
 
     public function getName(): string

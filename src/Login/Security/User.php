@@ -15,20 +15,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface
 {
-    /**
-     * @var string
-     */
-    private $username;
-
-    /**
-     * @var string
-     */
-    private $id;
-
-    public function __construct(string $username, string $id)
+    public function __construct(private string $username, private string $id)
     {
-        $this->username = $username;
-        $this->id = $id;
     }
 
     public function getId(): string
@@ -36,7 +24,7 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return [
             'ROLE_USER',
@@ -53,7 +41,7 @@ class User implements UserInterface
         return null;
     }
 
-    public function getUsername()
+    public function getUserIdentifier(): string
     {
         return $this->username;
     }

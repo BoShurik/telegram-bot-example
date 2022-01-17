@@ -15,20 +15,8 @@ use Psr\Cache\CacheItemPoolInterface;
 
 class LocationHandler
 {
-    /**
-     * @var CacheItemPoolInterface
-     */
-    private $cache;
-
-    /**
-     * @var int
-     */
-    private $lifetime;
-
-    public function __construct(CacheItemPoolInterface $cache, int $lifetime = 0)
+    public function __construct(private CacheItemPoolInterface $cache, private int $lifetime = 0)
     {
-        $this->cache = $cache;
-        $this->lifetime = $lifetime;
     }
 
     public function hasLocationCommand(string $chat): bool

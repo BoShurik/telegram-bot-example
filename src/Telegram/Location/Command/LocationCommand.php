@@ -21,26 +21,11 @@ use TelegramBot\Api\Types\Update;
 
 class LocationCommand implements CommandInterface
 {
-    /**
-     * @var CommandRegistry
-     */
-    private $commandRegistry;
-
-    /**
-     * @var LocationHandler
-     */
-    private $locationHandler;
-
-    public function __construct(CommandRegistry $commandRegistry, LocationHandler $locationHandler)
+    public function __construct(private CommandRegistry $commandRegistry, private LocationHandler $locationHandler)
     {
-        $this->commandRegistry = $commandRegistry;
-        $this->locationHandler = $locationHandler;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function execute(BotApi $api, Update $update)
+    public function execute(BotApi $api, Update $update): void
     {
         /** @var LocationCommandInterface $command */
         $command = $this->getLocationCommand($update->getMessage());
@@ -48,10 +33,7 @@ class LocationCommand implements CommandInterface
         $this->locationHandler->clearLocationCommand((string) $update->getMessage()->getChat()->getId());
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function isApplicable(Update $update)
+    public function isApplicable(Update $update): bool
     {
         if (!$update->getMessage()) {
             return false;
@@ -62,7 +44,7 @@ class LocationCommand implements CommandInterface
         if (!$this->locationHandler->hasLocationCommand((string) $update->getMessage()->getChat()->getId())) {
             return false;
         }
-        if (!$command = $this->getLocationCommand($update->getMessage())) {
+        if (!$this->getLocationCommand($update->getMessage())) {
             return false;
         }
 
